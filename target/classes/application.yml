@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: brs-backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/brs_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+# Security & JWT Configuration
+app:
+  jwt:
+    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    expiration-ms: 86400000 # 24 hours
+  seat-lock:
+    timeout-minutes: 10 # Temporary seat lock duration before release
+  razorpay:
+    key-id: ${RAZORPAY_KEY_ID:rzp_test_college_demo_key}
+    key-secret: ${RAZORPAY_KEY_SECRET:test_college_demo_secret}
+    mock-mode: true # When true, enables instant mock payment verification for offline college demo/viva
+
+logging:
+  level:
+    com.brs: INFO
+    org.springframework.security: WARN
